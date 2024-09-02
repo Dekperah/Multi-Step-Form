@@ -5,9 +5,13 @@ const form = document.getElementById('form');
 const planCards = document.querySelectorAll('.plan-card');
 const addsonCards = document.querySelectorAll('.addon-card');
 const changePlanBtn = document.getElementById('change-plan');
+// empty object to store selected plan, price and duration
 let selectedPlan = {};
+// function for storing selected add-on plan
 const selectedAddsOn = () => {
+  // create emplty array to store plan details
   let addOnArr = [];
+  // loop add-on card to find selected add-on cards
   addsonCards.forEach((card) => {
     let price = card.querySelector('.subscription-price').textContent;
     let name = card.querySelector('.card-name').textContent;
@@ -119,7 +123,8 @@ const showStep = (x) => {
 };
 showStep(stepNum);
 
-// STEP-1 PERSONAL INFO & FORM-VALIDATION 
+// STEP-1 | PERSONAL INFO [ FORM-VALIDATION ]
+
 const showError = (input, warningText) => {
   input.classList.add('error');
   input.parentElement.querySelector('.warning').textContent = warningText;
@@ -161,7 +166,7 @@ const formValidation = () => {
   return form.checkValidity();
 };
 
-// STEP-2 SELECT PLAN & TOGGLE BUTTON
+// STEP-2 | SELECT PLAN & TOGGLE BUTTON
 const toggle = document.getElementById('toggle');
 const yearlyBenefit = document.querySelectorAll('.yearly-benefit');
 const month = document.getElementById('monthly');
@@ -202,7 +207,7 @@ planCards.forEach((card) => {
   });
 });
 
-// STEP3 ADD-ON
+// STEP3 | ADD-ON
 addsonCards.forEach((card) => {
   card.addEventListener('click', (e) => {
     let target = e.currentTarget;
@@ -216,7 +221,7 @@ addsonCards.forEach((card) => {
   });
 });
 
-// STEP-4 FINISHING UP
+// STEP-4 | FINISHING UP
 const renderTotal = () => {
   let totalAmount = 0;
   const planDuration = selectedPlan.planDur === 'mo' ? 'Monthly' : 'Yearly';
@@ -255,10 +260,12 @@ const renderTotal = () => {
 
     totalAmount += parseInt(item.price);
   });
+
   total.innerHTML = `<span>Total(
     per ${planDuration.slice(0, -2).toLocaleLowerCase()}) </span> 
       <span> $${totalAmount}/${selectedPlan.planDur}</span>`;
 };
+
 changePlanBtn.addEventListener('click', () => {
   stepNum = 0;
   showStep(stepNum);
